@@ -1,0 +1,11 @@
+@mixin themeColor($inLight: #f0f0f0, $inDark: #212121) {
+	.current_theme {
+		.v-theme--light & {
+			background: $inLight;
+		}
+
+		.v-theme--dark & {
+			background: $inDark;
+		}
+	}
+}
