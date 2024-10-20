@@ -1,13 +1,15 @@
-export default (inputValue: string) => {
-	const router = useRouter()
-	return () => {
-		// from useImgsStore
-		const searchImgs = (str: string) => console.log('searchImgs ' + str)
-		// from useHistoryStore
-		const recordHistory = (str: string) => console.log('record ' + str)
+import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 
-		searchImgs(inputValue)
-		recordHistory(inputValue)
-		router.push({})
+export default (inputValue: Ref<string>) => {
+	const router = useRouter()
+	// from useImgsStore
+	const searchImgs = (str: string) => console.log('searchImgs ' + str)
+	const { recordNewHistory } = useSearchHistoryStore()
+	return () => {
+		if (inputValue.value) {
+			searchImgs(inputValue.value)
+			recordNewHistory(inputValue.value)
+			router.push({})
+		}
 	}
 }

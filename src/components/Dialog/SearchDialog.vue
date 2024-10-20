@@ -33,7 +33,7 @@
 						tag="ul"
 					>
 						<v-list-item
-							v-for="title of showList"
+							v-for="{ word: title } of showList"
 							:key="title"
 							tabindex="0"
 							tag="li"
@@ -43,7 +43,7 @@
 							<template #append>
 								<v-btn
 									icon="fas fa-circle-xmark"
-									@click.stop="deleteHistory(title)"
+									@click.stop="deleteSingleHistory(title)"
 								></v-btn>
 							</template>
 						</v-list-item>
@@ -67,20 +67,22 @@
 	import { IS_SHOW_SEARCH_BTN } from '../TopBanner/key'
 	import useFormSubmit from '@/use/form/useFormSubmit'
 	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
+	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 
-	const { smAndUp } = useDisplay()
 	const { t } = useTranslation('topbanner')
+	const { smAndUp } = useDisplay()
 	const isShowSearchBtn = inject<boolean>(IS_SHOW_SEARCH_BTN)
 
-	// from useHistoryStore
 	const inputValue = ref('')
-	const historyList = reactive(['abc', 'def', 'ghi', 'a', 'c', 'd', 'g', 'e'])
+	const history = useSearchHistoryStore()
 	const showList = computed(() =>
-		historyList.filter(s => s !== inputValue.value)
+		history.outputList.filter(({ word }) => word !== inputValue.value)
 	)
-	const deleteHistory = (str: string) => console.log('delete ' + str)
+
+	const deleteSingleHistory = history.deleteSingleHistory
 	const triggerSubmit = useFormSubmit()
-	const submitHandler = useFormSubmitHandler(inputValue.value)
+	const submitHandler = useFormSubmitHandler(inputValue)
+
 	function listClick(value: string) {
 		inputValue.value = value
 		triggerSubmit()

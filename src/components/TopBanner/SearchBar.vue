@@ -7,7 +7,10 @@
 			density="compact"
 			hide-details
 			hide-no-data
-			:items="showList"
+			hide-selected
+			item-title="word"
+			item-value="word"
+			:items="history.outputList"
 			menu-icon=""
 			name="search"
 			placeholder="PLACEHOLDER"
@@ -16,14 +19,15 @@
 			@click:append-inner="triggerSubmit"
 			@keydown.enter="triggerSubmit"
 			@update:model-value="triggerSubmit"
+			@update:search="inputValue = $event"
 		>
 			<template #item="{ props, item }">
 				<v-list-item v-bind="props">
 					<template #append>
 						<v-btn
 							icon="fas fa-circle-xmark"
-							@click.stop="deleteHistory(item.value)"
-							@keydown.stop.enter="deleteHistory(item.value)"
+							@click.stop="history.deleteSingleHistory(item.title)"
+							@keydown.stop.enter="history.deleteSingleHistory(item.title)"
 						></v-btn>
 					</template>
 				</v-list-item>
@@ -38,21 +42,15 @@
 </template>
 
 <script setup lang="ts">
+	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 	import utils from '@/styles/utils.module.scss'
 	import useFormSubmit from '@/use/form/useFormSubmit'
 	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
 	import { useTranslation } from 'i18next-vue'
 
 	const { t } = useTranslation('topbanner')
-	// from useHistoryStore
-	const historyList = reactive(['abc', 'def', 'ghi'])
-	const deleteHistory = (str: string) => console.log('delete ' + str)
-
 	const inputValue = ref('')
-	const showList = computed(() =>
-		historyList.filter(s => s !== inputValue.value)
-	)
-
+	const history = useSearchHistoryStore()
 	const triggerSubmit = useFormSubmit()
 	const submitHandler = useFormSubmitHandler(inputValue)
 </script>
