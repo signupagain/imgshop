@@ -17,13 +17,14 @@
 							v-model="inputValue"
 							hide-details
 							variant="outlined"
-							@keydown.enter="triggerSubmit"
+							@keydown.down.prevent="downToList"
+							@keydown.enter.prevent="triggerSubmit"
 						>
 							<template #prepend-inner>
 								<v-icon icon="fas fa-magnifying-glass" size="small"></v-icon>
 							</template>
 						</v-text-field>
-						<button ref="submit" :class="utils.hidden"></button>
+						<button ref="submit" :class="utils.hidden" tabindex="-1"></button>
 					</v-form>
 					<v-list
 						ref="vlist"
@@ -68,6 +69,7 @@
 	import useFormSubmit from '@/use/form/useFormSubmit'
 	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
+	import { VList } from 'vuetify/components'
 
 	const { t } = useTranslation('topbanner')
 	const { smAndUp } = useDisplay()
@@ -86,6 +88,17 @@
 	function listClick(value: string) {
 		inputValue.value = value
 		triggerSubmit()
+	}
+
+	const vlist = useTemplateRef<typeof VList>('vlist')
+
+	function downToList() {
+		if (
+			vlist.value &&
+			vlist.value.$el instanceof Element &&
+			vlist.value.$el.firstElementChild instanceof HTMLElement
+		)
+			vlist.value.$el.firstElementChild.focus()
 	}
 </script>
 

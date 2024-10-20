@@ -5,9 +5,6 @@ export default {
 	VList: {
 		variant: 'tonal',
 		rounded: 'lg',
-		style: {
-			width: 'clamp(100%,150px,400px)',
-		},
 	},
 	VListSubheader: {
 		style: {
