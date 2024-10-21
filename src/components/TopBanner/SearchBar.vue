@@ -2,7 +2,6 @@
 	<v-form ref="form" @submit.prevent="submitHandler">
 		<v-autocomplete
 			v-model="inputValue"
-			append-inner-icon="fas fa-magnifying-glass"
 			close-text="Search"
 			density="compact"
 			hide-details
@@ -12,15 +11,24 @@
 			item-value="word"
 			:items="history.outputList"
 			menu-icon=""
+			:menu-props="{ maxHeight: 200 }"
 			name="search"
-			placeholder="PLACEHOLDER"
 			single-line
-			variant="outlined"
-			@click:append-inner="triggerSubmit"
+			variant="solo-filled"
 			@keydown.enter="triggerSubmit"
 			@update:model-value="triggerSubmit"
 			@update:search="inputValue = $event"
 		>
+			<template #append-inner>
+				<v-btn
+					ref="submit"
+					:aria-label="t('search')"
+					icon="fas fa-magnifying-glass"
+					size="small"
+					type="submit"
+					@click="triggerSubmit"
+				></v-btn>
+			</template>
 			<template #item="{ props, item }">
 				<v-list-item v-bind="props">
 					<template #append>
@@ -33,17 +41,11 @@
 				</v-list-item>
 			</template>
 		</v-autocomplete>
-		<button
-			ref="submit"
-			:aria-label="t('search')"
-			:class="utils.hidden"
-		></button>
 	</v-form>
 </template>
 
 <script setup lang="ts">
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
-	import utils from '@/styles/utils.module.scss'
 	import useFormSubmit from '@/use/form/useFormSubmit'
 	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
 	import { useTranslation } from 'i18next-vue'

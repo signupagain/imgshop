@@ -1,7 +1,7 @@
 <template>
 	<div class="d-flex align-center ga-2">
 		<Teleport defer :disabled="smAndUp" to=".i_bottomx">
-			<SearchDialog></SearchDialog>
+			<SearchDialog v-if="isShowSearchBar"></SearchDialog>
 			<UserSection />
 			<v-btn
 				href="/"
@@ -31,6 +31,8 @@
 	import useChangeTheme from '@/use/theme/useChangeTheme'
 	import useDetectSystemColorScheme from '@/use/theme/useDetectSystemColorScheme'
 	import { IS_SHOW_COLORMODE_BTN } from './key'
+
+	defineProps<{ isShowSearchBar?: boolean }>()
 
 	const { t } = useTranslation('topbanner')
 	const { smAndUp } = useDisplay()

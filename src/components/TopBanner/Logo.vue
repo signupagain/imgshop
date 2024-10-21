@@ -10,11 +10,12 @@
 			:class="$style.logo"
 			src="@/assets/logo.svg"
 		/>
-		<span :class="$style.brand" v-text="brandName"></span>
+		<span :class="utils.brand" v-text="brandName"></span>
 	</a>
 </template>
 
 <script setup lang="ts">
+	import utils from '@/styles/utils.module.scss'
 	import { useTranslation } from 'i18next-vue'
 
 	const { t } = useTranslation('topbanner')
@@ -30,10 +31,5 @@
 		:global(.v-theme--light) & {
 			filter: invert(0);
 		}
-	}
-
-	.brand {
-		font-family: 'Protest Strike', 'Roboto', Arial, Helvetica, sans-serif;
-		color: rgb(var(--v-theme-onPrimary));
 	}
 </style>
