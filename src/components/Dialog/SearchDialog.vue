@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-if="isShowSearchBtn" max-height="600" max-width="500">
+	<v-dialog v-if="isNeedSearchBtn" max-height="600" max-width="500">
 		<template #activator="{ props: activatorProps }">
 			<v-btn
 				v-bind="activatorProps"
@@ -65,15 +65,15 @@
 	import utils from '@/styles/utils.module.scss'
 	import { useTranslation } from 'i18next-vue'
 	import { useDisplay } from 'vuetify'
-	import { IS_SHOW_SEARCH_BTN } from '../TopBanner/key'
 	import useFormSubmit from '@/use/form/useFormSubmit'
 	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 	import { VList } from 'vuetify/components'
+	import { IS_NEED_SEARCH_BTN, IS_NEED_SEARCH_BTN_TYPE } from '../TopBanner/key'
 
 	const { t } = useTranslation('topbanner')
 	const { smAndUp } = useDisplay()
-	const isShowSearchBtn = inject<boolean>(IS_SHOW_SEARCH_BTN)
+	const isNeedSearchBtn = inject<IS_NEED_SEARCH_BTN_TYPE>(IS_NEED_SEARCH_BTN)
 
 	const inputValue = ref('')
 	const history = useSearchHistoryStore()

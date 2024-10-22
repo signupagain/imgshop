@@ -4,9 +4,9 @@ export default defineStore('searchHistory', () => {
 	const historyName = 'historyList'
 
 	const historyList: Ref<Array<{ word: string }>> = ref(
-		JSON.parse(
-			localStorage.getItem(historyName) ?? '["a","b","c","d","e"]'
-		).map((word: string) => ({ word }))
+		JSON.parse(localStorage.getItem(historyName) ?? '[]').map(
+			(word: string) => ({ word })
+		)
 	)
 
 	const outputList = computed(() => [...historyList.value].reverse())

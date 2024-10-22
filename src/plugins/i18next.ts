@@ -5,6 +5,7 @@ import zhHantTW from '@/locale/output/zhHantTW'
 
 const i18nOption: InitOptions = {
 	debug: import.meta.env.MODE === 'development',
+	defaultNS: 'common',
 	lng: import.meta.env.VITE_DEFAULT_LNG ?? 'zh-Hant-TW',
 	interpolation: {
 		escapeValue: false,

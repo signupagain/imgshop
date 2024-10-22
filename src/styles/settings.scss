@@ -1,3 +1,3 @@
-@use 'vuetify' with (
+@forward 'vuetify/settings' with (
 	$color-pack: false
 );

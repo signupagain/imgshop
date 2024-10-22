@@ -5,22 +5,25 @@
 		</template>
 		<template #default>
 			<div class="mx-sm-3 w-sm-50">
-				<SearchBar v-if="mdAndUp && isShowSearchBar" />
+				<SearchBar v-if="mdAndUp && isNeedSearchBar && isShowSearchBar" />
 			</div>
 		</template>
 		<template #append>
-			<IconSection :is-show-search-bar />
+			<IconSection :is-need-search-bar />
 		</template>
 	</v-app-bar>
 </template>
 
 <script setup lang="ts" name="TopBanner">
 	import { useDisplay } from 'vuetify'
-	import { IS_SHOW_SEARCH_BTN } from './key'
+	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
+	import { IS_NEED_SEARCH_BTN } from './key'
 
-	defineProps<{ isShowSearchBar?: boolean }>()
+	defineProps<{ isNeedSearchBar?: boolean }>()
 
 	const { mdAndUp } = useDisplay()
 	const isBelowMdAndUp = computed(() => !mdAndUp.value)
-	provide(IS_SHOW_SEARCH_BTN, isBelowMdAndUp)
+	provide(IS_NEED_SEARCH_BTN, isBelowMdAndUp)
+	const isShowSearchBar =
+		inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)?.isShowSearchBar
 </script>

@@ -9,3 +9,19 @@
 		}
 	}
 }
+
+%absolute {
+	position: absolute;
+}
+
+%inset {
+	inset: 0;
+}
+
+@mixin absolute($inset: true) {
+	@extend %absolute;
+
+	@if ($inset) {
+		@extend %inset;
+	}
+}
