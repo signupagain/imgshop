@@ -15,6 +15,7 @@
 		"i18next": "^23.16.0",
 		"i18next-vue": "^5.0.0",
 		"nanoid": "^5.0.7",
+		"pexels": "^1.4.0",
 		"roboto-fontface": "*",
 		"vue": "^3.4.31",
 		"vuetify": "3.7.1"
