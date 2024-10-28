@@ -1,7 +1,8 @@
 <template>
-	<v-app>
-		<TopBanner :is-need-search-bar />
-		<router-view />
+	<v-app class="d-flex flex-column justify-space-between">
+		<TopBanner />
+		<RouterView />
+		<CopyRight class="flex-0-1-0 elevation-2" />
 	</v-app>
 	<div
 		class="i_bottomx current_theme d-flex flex-row-reverse justify-center ga-3 position-sticky bottom-0"
