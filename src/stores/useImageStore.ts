@@ -1,5 +1,6 @@
 import { ImgsLibType, ImgType, ResultType } from '@/@types/pexels'
 import { searchCurated, searchRequest } from '@/api/pexels'
+import useEmitError from '@/use/feedback/useEmitError'
 import { throttle } from 'lodash-es'
 import { Photo } from 'pexels'
 import { defineStore } from 'pinia'
@@ -86,8 +87,12 @@ export default defineStore('imgaeStore', () => {
 	}
 
 	function appendImgs() {
+		const { resetError, emitError } = useEmitError()
 		const data = imgsLib.value.get(activeTheme.value)
+
 		if (data && typeof data !== 'string') {
+			resetError()
+
 			if (data.mutiplier * quantity.value < data.photos.size) {
 				data.mutiplier++
 				return
@@ -128,7 +133,10 @@ export default defineStore('imgaeStore', () => {
 		}
 
 		function errorHandler({ message }: Error) {
-			if (data && typeof data !== 'string') data.error = message
+			if (data && typeof data !== 'string') {
+				data.error = message
+				emitError(data.error)
+			}
 		}
 	}
 

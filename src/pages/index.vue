@@ -14,11 +14,12 @@
 		</div>
 		<theme-background></theme-background>
 	</article>
+	<search-gallery></search-gallery>
 </template>
 <script lang="ts" setup>
 	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
 	import utils from '@/styles/utils.module.scss'
-	import useThresholdToggleSearchBar from '@/use/useThresholdToggleSearchBar'
+	import useThresholdToggleSearchBar from '@/use/feedback/useThresholdToggleSearchBar'
 	import { useTranslation } from 'i18next-vue'
 
 	definePage({

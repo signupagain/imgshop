@@ -1,4 +1,8 @@
 {
 	"title": "ImgShop",
-	"by": "拍攝者:"
+	"by": "拍攝者:",
+	"images": {
+		"title": "精選圖片",
+		"result": "{{theme}}的搜尋結果:"
+	}
 }

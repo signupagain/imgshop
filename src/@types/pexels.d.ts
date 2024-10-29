@@ -5,6 +5,7 @@ export type ImgType = {
 	photographer: string
 	src: string
 	alt: string
+	isLoading: boolean
 }
 
 export type ResultType = {
