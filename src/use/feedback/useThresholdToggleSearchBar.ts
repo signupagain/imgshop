@@ -8,9 +8,7 @@ export default (
 
 	const option: IntersectionObserverInit = { threshold }
 	const cb: IntersectionObserverCallback = entries =>
-		entries.forEach(
-			({ isIntersecting }) => (isShow.value = !isIntersecting)
-		)
+		entries.forEach(({ isIntersecting }) => (isShow.value = !isIntersecting))
 
 	const observer = new IntersectionObserver(cb, option)
 

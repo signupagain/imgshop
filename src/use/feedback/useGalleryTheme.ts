@@ -11,9 +11,11 @@ export default () => {
 	watch(
 		() => route.name,
 		val =>
-			val === '/search' && typeof route.query.theme === 'string' ?
-				(activeTheme.value = route.query.theme)
-			:	(activeTheme.value = ''),
+			val !== '/photo/[id]' ?
+				val === '/search' && typeof route.query.theme === 'string' ?
+					(activeTheme.value = route.query.theme)
+				:	(activeTheme.value = '')
+			:	null,
 		{ immediate: true }
 	)
 

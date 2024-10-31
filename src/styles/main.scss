@@ -3,3 +3,8 @@
 @use 'mixin';
 
 @include mixin.themeColor();
+
+html,
+body {
+	scroll-behavior: smooth;
+}

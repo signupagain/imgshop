@@ -4,5 +4,11 @@
 	"images": {
 		"title": "精選圖片",
 		"result": "{{theme}}的搜尋結果:"
-	}
+	},
+	"width": "寬度",
+	"height": "高度",
+	"screenshot_alt": "{{theme}}主題展示圖集",
+	"source": "來源",
+	"to": "Pexels",
+	"addToList": "加入購物車"
 }

@@ -11,12 +11,13 @@
 		"p": "prettier --write ."
 	},
 	"dependencies": {
+		"axios": "^1.7.7",
 		"core-js": "^3.37.1",
+		"html2canvas": "^1.4.1",
 		"i18next": "^23.16.0",
 		"i18next-vue": "^5.0.0",
 		"lodash-es": "^4.17.21",
 		"nanoid": "^5.0.7",
-		"pexels": "^1.4.0",
 		"roboto-fontface": "*",
 		"vue": "^3.4.31",
 		"vuetify": "3.7.1"

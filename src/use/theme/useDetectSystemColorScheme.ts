@@ -1,6 +1,6 @@
 import { useTheme } from 'vuetify'
 import useChangeTheme from './useChangeTheme'
-import { useEventListener } from '../useEvent'
+import { useEventListener } from '../base/useEvent'
 
 export default (mode: string = 'dark') => {
 	if (window.matchMedia) {

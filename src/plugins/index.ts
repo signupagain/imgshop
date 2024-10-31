@@ -16,6 +16,13 @@ import '@/styles/main.scss'
 import type { App } from 'vue'
 import i18next from './i18next'
 
+// Provides
+import { bgScreenshot, BGSCREENSHOT_KEY } from '@/provides/bgScreenshot'
+
 export function registerPlugins(app: App) {
-	i18next(app).use(vuetify).use(router).use(pinia)
+	i18next(app)
+		.use(vuetify)
+		.use(router)
+		.use(pinia)
+		.provide(BGSCREENSHOT_KEY, bgScreenshot)
 }

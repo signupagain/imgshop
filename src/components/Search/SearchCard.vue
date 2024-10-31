@@ -6,27 +6,51 @@
 		}"
 	>
 		<template v-if="error">
-			<p class="elevation-10" :class="$style.error" v-text="error"></p>
+			<p
+				class="elevation-10 text-center"
+				:class="$style.error"
+				v-text="error"
+			></p>
 		</template>
 		<template v-else>
-			<img
-				:id
-				ref="img"
-				v-decode-img
-				:alt
-				class="w-100 h-100 elevation-10"
-				:src
-			/>
-			<p :class="$style.author">
+			<a
+				class="d-block w-100 h-100 elevation-10"
+				href="/"
+				style="cursor: zoom-in"
+				@click.prevent="toDetailPage"
+			>
+				<img
+					:id
+					ref="img"
+					v-decode-img
+					:alt
+					class="w-100 h-100"
+					crossorigin="anonymous"
+					:src
+				/>
+			</a>
+			<p class="text-caption" :class="$style.author">
 				{{ t('by') }}
 				<a :href target="_blank">
 					{{ photographer }}
-					<v-icon icon="fas fa-arrow-up-right-from-square" size="12"></v-icon>
+					<v-icon
+						icon="fas fa-arrow-up-right-from-square"
+						:size="xs ? 8 : 12"
+					></v-icon>
 				</a>
 			</p>
 			<div :class="$style.actions">
-				<v-btn icon="fas fa-bag-shopping" rounded></v-btn>
-				<v-btn icon="fas fa-plus" rounded></v-btn>
+				<v-btn
+					icon="fas fa-bag-shopping"
+					rounded
+					:size="smAndDown ? 'x-small' : 'default'"
+				></v-btn>
+				<v-btn
+					icon="fas fa-plus"
+					rounded
+					:size="smAndDown ? 'x-small' : 'default'"
+					:title="t('addToList')"
+				></v-btn>
 			</div>
 			<v-skeleton-loader
 				v-if="isLoading"
@@ -43,9 +67,11 @@
 
 <script setup lang="ts">
 	import { ImgType } from '@/@types/pexels'
+	import { searchCardScrollRecord, toScreenshot } from '@/provides/bgScreenshot'
 	import useDecodeImg from '@/use/directives/useDecodeImg'
 	import { useTranslation } from 'i18next-vue'
 	import { VSkeletonLoader } from 'vuetify/components'
+	import { useDisplay } from 'vuetify'
 
 	const { item, observeLoading } = defineProps<{
 		item: ImgType
@@ -65,9 +91,20 @@
 	} = toRefs(item)
 
 	const { t } = useTranslation()
+	const { xs, smAndDown } = useDisplay()
 	const { vDecodeImg, error } = useDecodeImg()
 
 	observeLoading(useTemplateRef('loader'))
+
+	const router = useRouter()
+
+	const toDetailPage = () => {
+		searchCardScrollRecord.value = window.scrollY
+
+		toScreenshot().then(() =>
+			router.push({ name: '/photo/[id]', params: { id: id.value } })
+		)
+	}
 </script>
 
 <style lang="scss" module>
@@ -103,6 +140,11 @@
 
 		font-weight: 900;
 		-webkit-text-stroke: 0.15px darkorange;
+
+		@media (max-width: 260px) {
+			left: 0.5rem;
+			bottom: 0.5rem;
+		}
 	}
 
 	.actions {
@@ -120,6 +162,11 @@
 
 		&:hover {
 			opacity: 1;
+		}
+
+		@media (max-width: 260px) {
+			top: 0.5rem;
+			right: 0.5rem;
 		}
 	}
 

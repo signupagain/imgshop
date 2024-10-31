@@ -1,8 +1,8 @@
-import { ImgsLibType, ImgType, ResultType } from '@/@types/pexels'
-import { searchCurated, searchRequest } from '@/api/pexels'
+import { ImgsLibType, ImgType, Photo, ResultType } from '@/@types/pexels'
 import useEmitError from '@/use/feedback/useEmitError'
+import { searchCuratedRequest, searchRequest } from '@/api/pexels'
+import { AxiosError } from 'axios'
 import { throttle } from 'lodash-es'
-import { Photo } from 'pexels'
 import { defineStore } from 'pinia'
 
 export default defineStore('imgaeStore', () => {
@@ -49,13 +49,11 @@ export default defineStore('imgaeStore', () => {
 		word === '' ? useSearchCurated() : useSearchRequest()
 
 		function useSearchCurated() {
-			searchCurated()
-				.then(res => {
-					if ('error' in res) throw Error(res.error)
-
+			searchCuratedRequest()
+				.then(({ data }) => {
 					const response: ResultType = {
-						photos: photoHandler(res.photos),
-						nextPage: res.page + 1,
+						photos: photoHandler(data.photos),
+						nextPage: data.page + 1,
 						mutiplier: 1,
 					}
 
@@ -66,13 +64,11 @@ export default defineStore('imgaeStore', () => {
 
 		function useSearchRequest() {
 			searchRequest(activeTheme.value)
-				.then(res => {
-					if ('error' in res) throw Error(res.error)
-
+				.then(({ data }) => {
 					const response: ResultType = {
-						photos: photoHandler(res.photos),
-						nextPage: res.page + 1,
-						total: res.total_results,
+						photos: photoHandler(data.photos),
+						nextPage: data.page + 1,
+						total: data.total_results,
 						mutiplier: 1,
 					}
 
@@ -81,61 +77,58 @@ export default defineStore('imgaeStore', () => {
 				.catch(errorHandler)
 		}
 
-		function errorHandler({ message }: Error) {
+		function errorHandler({ message }: AxiosError) {
 			return imgsLib.value.set(activeTheme.value, message)
 		}
 	}
 
 	function appendImgs() {
 		const { resetError, emitError } = useEmitError()
-		const data = imgsLib.value.get(activeTheme.value)
+		const property = imgsLib.value.get(activeTheme.value)
 
-		if (data && typeof data !== 'string') {
+		if (property && typeof property !== 'string') {
 			resetError()
 
-			if (data.mutiplier * quantity.value < data.photos.size) {
-				data.mutiplier++
+			if (property.mutiplier * quantity.value < property.photos.size) {
+				property.mutiplier++
 				return
 			}
 
 			activeTheme.value === '' ?
-				useSearchCurated(data, data.nextPage)
-			:	useSearchRequest(data, data.nextPage, activeTheme.value)
+				useSearchCurated(property, property.nextPage)
+			:	useSearchRequest(property, property.nextPage, activeTheme.value)
 
-			imgsLib.value.set(activeTheme.value, data)
+			imgsLib.value.set(activeTheme.value, property)
 		}
 
-		function useSearchCurated(data: ResultType, page: number) {
-			searchCurated(page)
-				.then(res => {
-					if ('error' in res) throw Error(res.error)
-
-					photoHandler(res.photos).forEach(photo => data.photos.add(photo))
-					data.nextPage = res.page + 1
+		function useSearchCurated(property: ResultType, page: number) {
+			searchCuratedRequest(page)
+				.then(({ data }) => {
+					photoHandler(data.photos).forEach(photo => property.photos.add(photo))
+					property.nextPage = data.page + 1
 				})
 				.catch(errorHandler)
 		}
 
 		function useSearchRequest(
-			data: ResultType,
+			property: ResultType,
 			page: number,
 			activeTheme: string
 		) {
 			searchRequest(activeTheme, page)
-				.then(res => {
-					if ('error' in res) throw Error(res.error)
-
-					photoHandler(res.photos).forEach(photo => data.photos.add(photo))
-					data.nextPage = res.page + 1
-					if (data.total !== res.total_results) data.total = res.total_results
+				.then(({ data }) => {
+					photoHandler(data.photos).forEach(photo => property.photos.add(photo))
+					property.nextPage = data.page + 1
+					if (property.total !== data.total_results)
+						property.total = data.total_results
 				})
 				.catch(errorHandler)
 		}
 
-		function errorHandler({ message }: Error) {
-			if (data && typeof data !== 'string') {
-				data.error = message
-				emitError(data.error)
+		function errorHandler({ message }: AxiosError) {
+			if (property && typeof property !== 'string') {
+				property.error = message
+				emitError(property.error)
 			}
 		}
 	}
@@ -153,6 +146,8 @@ export default defineStore('imgaeStore', () => {
 					alt,
 				}) => ({
 					id: `${id}`,
+					width: `${width}`,
+					height: `${height}`,
 					ratio: (width / height).toFixed(5),
 					photographerUrl,
 					photographer,
