@@ -27,10 +27,9 @@
 	.logo {
 		width: 3rem;
 		aspect-ratio: 1;
-		filter: invert(1);
 
-		:global(.v-theme--light) & {
-			filter: invert(0);
+		:global(.v-theme--dark) & {
+			filter: invert(1);
 		}
 	}
 </style>

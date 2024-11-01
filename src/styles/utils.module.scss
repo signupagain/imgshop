@@ -6,3 +6,9 @@
 .brand {
 	font-family: 'Protest Strike', 'Roboto', Arial, Helvetica, sans-serif !important;
 }
+
+.empty {
+	:global(.v-theme--dark) & :global(.v-img__img) {
+		filter: invert(1);
+	}
+}

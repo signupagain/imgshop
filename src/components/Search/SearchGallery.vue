@@ -2,6 +2,7 @@
 	<article class="mx-10 mt-10">
 		<v-empty-state
 			v-if="emptyResult"
+			:class="utils.empty"
 			:image="logo"
 			:title="emptyResult"
 		></v-empty-state>
@@ -27,6 +28,7 @@
 			</div>
 			<v-empty-state
 				v-if="resError"
+				:class="utils.empty"
 				:image="logo"
 				:title="resError"
 			></v-empty-state>
@@ -50,6 +52,7 @@
 	import useEmptyResult from '@/use/feedback/useEmptyResult'
 	import useEmitError from '@/use/feedback/useEmitError'
 	import useGalleryTheme from '@/use/feedback/useGalleryTheme'
+	import utils from '@/styles/utils.module.scss'
 
 	defineProps<{ titleTag: string }>()
 
