@@ -1,5 +1,5 @@
 <template>
-	<article class="mx-10 mt-10">
+	<article class="mx-10 mt-5 flex-1-1">
 		<v-empty-state
 			v-if="emptyResult"
 			:class="utils.empty"
@@ -27,10 +27,10 @@
 				</section>
 			</div>
 			<v-empty-state
-				v-if="resError"
+				v-if="responseError"
 				:class="utils.empty"
 				:image="logo"
-				:title="resError"
+				:title="responseError"
 			></v-empty-state>
 			<div v-else :class="$style.deco_box">
 				<v-progress-circular
@@ -49,18 +49,16 @@
 	import useSearchGalleryList from '@/use/layout/useSearchGalleryList'
 	import useRequestDetect from '@/use/request/useRequestDetect'
 	import logo from '@/assets/logo.svg'
-	import useEmptyResult from '@/use/feedback/useEmptyResult'
-	import useEmitError from '@/use/feedback/useEmitError'
 	import useGalleryTheme from '@/use/feedback/useGalleryTheme'
 	import utils from '@/styles/utils.module.scss'
+	import useErrorSearchResult from '@/use/feedback/useErrorSearchResult'
 
 	defineProps<{ titleTag: string }>()
 
 	const showList = useSearchGalleryList()
 	const observeLoading = usePhotoLoader()
-	const emptyResult = useEmptyResult()
-	const { resError } = useEmitError()
 	const galleryTitle = useGalleryTheme()
+	const { emptyResult, responseError } = useErrorSearchResult()
 
 	useRequestDetect(useTemplateRef('target'))
 </script>

@@ -1,5 +1,4 @@
 import { ImgsLibType, ImgType, Photo, ResultType } from '@/@types/pexels'
-import useEmitError from '@/use/feedback/useEmitError'
 import { searchCuratedRequest, searchRequest } from '@/api/pexels'
 import { AxiosError } from 'axios'
 import { throttle } from 'lodash-es'
@@ -53,7 +52,7 @@ export default defineStore('imgaeStore', () => {
 				.then(({ data }) => {
 					const response: ResultType = {
 						photos: photoHandler(data.photos),
-						nextPage: data.page + 1,
+						nextPage: data.next_page ? data.page + 1 : null,
 						mutiplier: 1,
 					}
 
@@ -67,7 +66,7 @@ export default defineStore('imgaeStore', () => {
 				.then(({ data }) => {
 					const response: ResultType = {
 						photos: photoHandler(data.photos),
-						nextPage: data.page + 1,
+						nextPage: data.next_page ? data.page + 1 : null,
 						total: data.total_results,
 						mutiplier: 1,
 					}
@@ -83,20 +82,14 @@ export default defineStore('imgaeStore', () => {
 	}
 
 	function appendImgs() {
-		const { resetError, emitError } = useEmitError()
 		const property = imgsLib.value.get(activeTheme.value)
 
 		if (property && typeof property !== 'string') {
-			resetError()
-
-			if (property.mutiplier * quantity.value < property.photos.size) {
+			property.mutiplier * quantity.value < property.photos.size ?
 				property.mutiplier++
-				return
-			}
-
-			activeTheme.value === '' ?
-				useSearchCurated(property, property.nextPage)
-			:	useSearchRequest(property, property.nextPage, activeTheme.value)
+			: property.nextPage === null ? (property.error = '已經沒有圖片了')
+			: activeTheme.value === '' ? useSearchCurated(property, property.nextPage)
+			: useSearchRequest(property, property.nextPage, activeTheme.value)
 
 			imgsLib.value.set(activeTheme.value, property)
 		}
@@ -126,10 +119,7 @@ export default defineStore('imgaeStore', () => {
 		}
 
 		function errorHandler({ message }: AxiosError) {
-			if (property && typeof property !== 'string') {
-				property.error = message
-				emitError(property.error)
-			}
+			if (property && typeof property !== 'string') property.error = message
 		}
 	}
 

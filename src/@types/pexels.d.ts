@@ -63,7 +63,7 @@ export type ImgType = {
 export type ResultType = {
 	total?: number
 	photos: Set<ImgType>
-	nextPage: number
+	nextPage: number | null
 	mutiplier: number
 	error?: string
 }

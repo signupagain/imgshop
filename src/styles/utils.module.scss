@@ -8,6 +8,7 @@
 }
 
 .empty {
+	min-height: 0;
 	:global(.v-theme--dark) & :global(.v-img__img) {
 		filter: invert(1);
 	}
