@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 
-export default defineStore('searchHistory', () => {
-	const historyName = 'historyList'
+const HISTORYNAME = 'historyList'
 
+export default defineStore('searchHistory', () => {
 	const historyList: Ref<Array<{ word: string }>> = ref(
-		JSON.parse(localStorage.getItem(historyName) ?? '[]').map(
+		JSON.parse(localStorage.getItem(HISTORYNAME) ?? '[]').map(
 			(word: string) => ({ word })
 		)
 	)
 
 	const outputList = computed(() => [...historyList.value].reverse())
 
-	function recordNewHistory(history: string) {
+	const recordNewHistory = (history: string) => {
 		if (!history || history.trim() === '') return
 
 		deleteSingleHistory(history)
@@ -19,19 +19,19 @@ export default defineStore('searchHistory', () => {
 			word: history,
 		})
 		localStorage.setItem(
-			historyName,
+			HISTORYNAME,
 			JSON.stringify(historyList.value.map(({ word }) => word))
 		)
 	}
 
-	function deleteSingleHistory(history: string) {
+	const deleteSingleHistory = (history: string) => {
 		const index = historyList.value.findIndex(obj => obj.word === history)
 		if (index !== -1) historyList.value.splice(index, 1)
 	}
 
-	function deleteAllHistory() {
+	const deleteAllHistory = () => {
 		historyList.value = []
-		localStorage.removeItem(historyName)
+		localStorage.removeItem(HISTORYNAME)
 	}
 
 	return {
