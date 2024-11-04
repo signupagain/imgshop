@@ -67,10 +67,10 @@ export default defineConfig({
 	server: {
 		port: 3000,
 		proxy: {
-			'/api': {
+			'/pexels': {
 				target: 'https://api.pexels.com/v1/',
 				changeOrigin: true,
-				rewrite: path => path.replace(/^\/api/, ''),
+				rewrite: path => path.replace(/^\/pexels/, ''),
 			},
 		},
 	},
