@@ -1,7 +1,4 @@
 ignore*
-auto-imports.d.ts
-components.d.ts
-typed-router.d.ts
 .DS_Store
 node_modules
 /dist
