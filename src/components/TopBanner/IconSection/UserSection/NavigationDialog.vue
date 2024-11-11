@@ -98,7 +98,7 @@
 	function eventHandler(e: Event) {
 		if (e.target instanceof HTMLElement && e.target.dataset) {
 			const target = e.target
-			const { fn, routeName: name } = target.dataset
+			const { fn } = target.dataset
 
 			switch (fn) {
 				case 'to':
