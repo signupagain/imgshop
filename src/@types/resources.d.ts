@@ -13,6 +13,10 @@ interface Resources {
     "to": "Pexels",
     "addToList": "加入購物車"
   },
+  "error": {
+    "nothingHere": "這裡什麼圖片都沒有",
+    "noMoreImgData": "已經沒有圖片了"
+  },
   "topbanner": {
     "login": "登入",
     "signup": "註冊",

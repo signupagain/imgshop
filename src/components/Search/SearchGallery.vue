@@ -1,10 +1,10 @@
 <template>
 	<article class="mx-10 mt-5 flex-1-1">
 		<v-empty-state
-			v-if="emptyResult"
+			v-if="resError"
 			:class="utils.empty"
 			:image="logo"
-			:title="emptyResult"
+			:title="resError"
 		></v-empty-state>
 		<template v-else>
 			<component
@@ -27,10 +27,10 @@
 				</section>
 			</div>
 			<v-empty-state
-				v-if="responseError"
+				v-if="noMorePhoto"
 				:class="utils.empty"
 				:image="logo"
-				:title="responseError"
+				:title="noMorePhoto"
 			></v-empty-state>
 			<div v-else :class="$style.deco_box">
 				<v-progress-circular
@@ -51,14 +51,30 @@
 	import logo from '@/assets/logo.svg'
 	import useGalleryTheme from '@/use/feedback/useGalleryTheme'
 	import utils from '@/styles/utils.module.scss'
-	import useErrorSearchResult from '@/use/feedback/useErrorSearchResult'
+	import useImageStore from '@/stores/useImageStore'
+	import { storeToRefs } from 'pinia'
+	import { useTranslation } from 'i18next-vue'
+	import { NOMOREIMGDATA, NOTHINGHERE } from '@/stores/useImageStore/constants'
 
 	defineProps<{ titleTag: string }>()
 
 	const showList = useSearchGalleryList()
 	const observeLoading = usePhotoLoader()
 	const galleryTitle = useGalleryTheme()
-	const { emptyResult, responseError } = useErrorSearchResult()
+
+	const { t } = useTranslation('error')
+	const imgStore = useImageStore()
+	const { responseError, noMorePhotoError } = storeToRefs(imgStore)
+	const resError = computed(() =>
+		responseError.value ?
+			t(responseError.value as ReturnType<() => typeof NOTHINGHERE>)
+		:	null
+	)
+	const noMorePhoto = computed(() =>
+		noMorePhotoError.value ?
+			t(noMorePhotoError.value as ReturnType<() => typeof NOMOREIMGDATA>)
+		:	null
+	)
 
 	useRequestDetect(useTemplateRef('target'))
 </script>

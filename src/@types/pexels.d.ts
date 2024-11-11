@@ -39,11 +39,11 @@ export interface Photo {
 	}
 }
 
-export declare type Photos = PaginationObject & {
+export type Photos = PaginationObject & {
 	photos: Photo[]
 }
 
-export declare type PhotosWithTotalResults = Photos & {
+export type PhotosWithTotalResults = Photos & {
 	total_results: number
 }
 
@@ -68,4 +68,8 @@ export type ResultType = {
 	error?: string
 }
 
-export type ImgsLibType = Map<string, ResultType | string>
+export interface ErrorResponse {
+	error: string
+}
+
+export type ImgsLibType = Map<string, ResultType | ErrorResponse>
