@@ -41,15 +41,11 @@
 			</p>
 			<div :class="$style.actions">
 				<v-btn
-					icon="fas fa-bag-shopping"
-					rounded
-					:size="smAndDown ? 'x-small' : 'default'"
-				></v-btn>
-				<v-btn
 					icon="fas fa-plus"
 					rounded
 					:size="smAndDown ? 'x-small' : 'default'"
 					:title="t('addToList')"
+					@click="appendShoppingList"
 				></v-btn>
 			</div>
 			<v-skeleton-loader
@@ -72,6 +68,7 @@
 	import { useTranslation } from 'i18next-vue'
 	import { VSkeletonLoader } from 'vuetify/components'
 	import { useDisplay } from 'vuetify'
+	import useUserStore from '@/stores/useUserStore'
 
 	const { item, observeLoading } = defineProps<{
 		item: ImgType
@@ -104,6 +101,14 @@
 		toScreenshot().then(() =>
 			router.push({ name: '/photo/[id]', params: { id: id.value } })
 		)
+	}
+
+	const userStore = useUserStore()
+
+	const appendShoppingList = () => {
+		if (userStore.historyIdList.includes(item.id)) return
+
+		userStore.appendList('shoppingList', item)
 	}
 </script>
 

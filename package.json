@@ -6,8 +6,7 @@
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
 		"lint": "eslint . --fix --ignore-path .gitignore",
-		"toc": "i18next-resources-for-ts toc -i src/locale/zhHantTW -o src/locale/output/zhHantTW.ts",
-		"interface": "i18next-resources-for-ts interface -i src/locale/zhHantTW -o src/@types/resources.d.ts",
+		"i18n": "i18next-resources-for-ts toc -i src/locale/zhHantTW -o src/locale/output/zhHantTW.ts && i18next-resources-for-ts interface -i src/locale/zhHantTW -o src/@types/resources.d.ts",
 		"p": "prettier --write ."
 	},
 	"dependencies": {

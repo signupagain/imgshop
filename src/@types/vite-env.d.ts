@@ -9,7 +9,6 @@ interface ImportMetaEnv {
 	readonly VITE_DEFAULT_COLOR_MODE: string
 	readonly VITE_BRAND_NAME: string
 	readonly VITE_PEXELS_API_AUTH_KEY: string
-	readonly VITE_DEFAULT_NANOID_LENGTH: number
 }
 
 interface ImportMeta {

@@ -7,7 +7,7 @@ export default () => {
 	const { activeThemeProperty } = storeToRefs(imgStore)
 
 	return computed(() =>
-		typeof activeThemeProperty?.value !== 'string' ?
+		!('error' in activeThemeProperty.value) ?
 			Array.from(activeThemeProperty.value.photos).find(
 				({ id }) => id === route.params.id
 			)

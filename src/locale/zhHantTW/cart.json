@@ -1,0 +1,24 @@
+{
+	"title": "購物結算",
+	"purchase": "確認購買",
+	"noData": "尚未選購",
+	"noHistory": "尚無紀錄",
+	"insufficient": "金額不足",
+	"label": {
+		"shoppingList": "購物清單",
+		"historyList": "購買紀錄"
+	},
+	"table": {
+		"title": "標題",
+		"photographer": "作者",
+		"photo": "圖片",
+		"price": "價格"
+	},
+	"dialog": {
+		"title": "購圖彈窗",
+		"text": "本作品採用Pexels API，來進行圖片展示、精進編程。任何喜歡的圖片，請至Pexels獲取。",
+		"close": "關閉彈窗",
+		"stop": "不再提示"
+	},
+	"wallet": "目前資金: {{money}}"
+}

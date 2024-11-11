@@ -9,7 +9,7 @@
 				tag="a"
 				:text="t('cart')"
 				:title="t('cart')"
-				@click.prevent
+				@click.prevent="toCartPage"
 			></v-btn>
 			<template v-if="smAndUp">
 				<v-divider inset vertical></v-divider>
@@ -31,12 +31,14 @@
 	import useChangeTheme from '@/use/theme/useChangeTheme'
 	import useDetectSystemColorScheme from '@/use/theme/useDetectSystemColorScheme'
 	import { IS_SHOW_COLORMODE_BTN } from './key'
+	import useToCartPage from './useToCartPage'
 
 	const { t } = useTranslation('topbanner')
 	const { smAndUp } = useDisplay()
 	const isShowColorModeBtn = computed(() => !smAndUp.value)
 	const icon = setThemeIcon()
 	const changeTheme = useChangeTheme()
+	const toCartPage = useToCartPage()
 
 	useDetectSystemColorScheme()
 

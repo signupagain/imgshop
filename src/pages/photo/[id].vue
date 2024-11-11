@@ -85,6 +85,7 @@
 <script setup lang="ts">
 	import { BGSCREENSHOT_KEY, bgScreenshotType } from '@/provides/bgScreenshot'
 	import useImageStore from '@/stores/useImageStore'
+	import useUserStore from '@/stores/useUserStore'
 	import useFocus from '@/use/directives/useFocus'
 	import useTabClass from '@/use/feedback/useTabClass'
 	import useLeaveId from '@/use/request/useLeave[id]'
@@ -113,12 +114,8 @@
 	const btnList = computed(() => {
 		const list = [
 			{
-				icon: 'fas fa-bag-shopping',
-				event: () => {},
-			},
-			{
 				icon: 'fas fa-plus',
-				event: () => {},
+				event: appendShoppingList,
 			},
 			{
 				icon: 'fas fa-circle-xmark',
@@ -128,6 +125,14 @@
 
 		return mdAndDown.value ? list : list.slice(0, -1)
 	})
+
+	const userStore = useUserStore()
+
+	const appendShoppingList = () => {
+		if (!photo.value || userStore.historyIdList.includes(photo.value.id)) return
+
+		userStore.appendList('shoppingList', photo.value)
+	}
 </script>
 
 <style lang="scss" module>
