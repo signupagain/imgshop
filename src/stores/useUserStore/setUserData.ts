@@ -9,9 +9,9 @@ export default (data: UserData) => {
 	id.value = data.id
 	name.value = data.name
 
-	data.collectionList.forEach(v => collectionList.value.add(v))
+	data.collectionList.forEach(v => collectionList.value.push(v))
 
-	data.shoppingList.forEach(v => shoppingList.value.add(v))
+	data.shoppingList.forEach(v => shoppingList.value.push(v))
 
 	updateServerData({ shoppingList: data.shoppingList })
 }
