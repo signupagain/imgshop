@@ -5,7 +5,7 @@ const imgStore = useImageStore()
 
 export default (target: ShallowRef<HTMLDivElement | null>) => {
 	const option: IntersectionObserverInit = {
-		threshold: 0.3,
+		threshold: 0.01,
 	}
 
 	const cb: IntersectionObserverCallback = entries =>
