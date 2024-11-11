@@ -1,6 +1,9 @@
 <template>
-	<div class="d-flex align-center ga-2">
-		<Teleport defer :disabled="smAndUp" to=".i_bottomx">
+	<div
+		class="d-flex align-center ga-2"
+		:class="{ [$style['icon-section']]: isDetailPage && !smAndUp }"
+	>
+		<Teleport defer :disabled="smAndUp || isDetailPage" to=".i_bottomx">
 			<SearchDialog></SearchDialog>
 			<UserSection />
 			<v-btn
@@ -40,7 +43,18 @@
 	const changeTheme = useChangeTheme()
 	const toCartPage = useToCartPage()
 
+	const route = useRoute()
+	const isDetailPage = computed(() => route.name === '/photo/[id]')
+
 	useDetectSystemColorScheme()
 
 	provide(IS_SHOW_COLORMODE_BTN, isShowColorModeBtn)
 </script>
+
+<style lang="scss" module>
+	.icon-section {
+		html:has(&) {
+			overflow: hidden;
+		}
+	}
+</style>
