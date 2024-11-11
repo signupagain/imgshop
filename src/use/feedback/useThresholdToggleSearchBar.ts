@@ -4,27 +4,21 @@ export default (
 	target: ShallowRef<Element | null>,
 	threshold: number = 0.3
 ) => {
-	const isShowSearchBar = ref(false)
+	const isShow = ref(false)
 
-	const cb: IntersectionObserverCallback = entries => {
-		entries.forEach(({ isIntersecting }) =>
-			isIntersecting ?
-				(isShowSearchBar.value = false)
-			:	(isShowSearchBar.value = true)
-		)
-	}
 	const option: IntersectionObserverInit = { threshold }
+	const cb: IntersectionObserverCallback = entries =>
+		entries.forEach(
+			({ isIntersecting }) => (isShow.value = !isIntersecting)
+		)
+
 	const observer = new IntersectionObserver(cb, option)
 
 	onMounted(() => {
-		if (target.value && isELementRef(target)) observer.observe(target.value)
+		if (target.value instanceof Element) observer.observe(target.value)
 	})
 
 	onUnmounted(() => observer.disconnect())
 
-	return isShowSearchBar
-}
-
-function isELementRef(value: unknown): boolean {
-	return isRef(value) && value.value instanceof Element
+	return isShow
 }

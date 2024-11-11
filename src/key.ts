@@ -1,5 +1,5 @@
-export const TOGGLE_SEARCHBAR = 'toggleSearchBar'
+export const TOGGLE_SEARCHBAR = 'isIntersecting'
 export type TOGGLE_SEARCHBAR_TYPE = {
-	isShowSearchBar: boolean
-	toggleSearch: (isShow: boolean) => void
+	isIntersecting: Ref<boolean>
+	toggle: (isShow: boolean) => void
 }

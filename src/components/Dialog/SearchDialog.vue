@@ -1,5 +1,10 @@
 <template>
-	<v-dialog v-if="isNeedSearchBtn" max-height="600" max-width="500">
+	<v-dialog
+		v-if="isShowSearchBar"
+		v-model="isOpenDialog"
+		max-height="600"
+		max-width="500"
+	>
 		<template #activator="{ props: activatorProps }">
 			<v-btn
 				v-bind="activatorProps"
@@ -14,6 +19,7 @@
 				<v-card-text>
 					<v-form ref="form" @submit.prevent="submitHandler">
 						<v-text-field
+							ref="input"
 							v-model="inputValue"
 							hide-details
 							variant="outlined"
@@ -39,7 +45,7 @@
 							tabindex="0"
 							tag="li"
 							:title
-							@click="listClick(title)"
+							@click="clickListItem(title)"
 						>
 							<template #append>
 								<v-btn
@@ -66,40 +72,46 @@
 	import { useTranslation } from 'i18next-vue'
 	import { useDisplay } from 'vuetify'
 	import useFormSubmit from '@/use/form/useFormSubmit'
-	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
+	import useFormSubmitHandler from '@/use/form/useSearchFormSubmitHandler'
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
-	import { VList } from 'vuetify/components'
-	import { IS_NEED_SEARCH_BTN, IS_NEED_SEARCH_BTN_TYPE } from '../TopBanner/key'
+	import { VForm, VList } from 'vuetify/components'
+	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
+	import useDownToList from '@/use/feedback/useDownToList'
 
 	const { t } = useTranslation('topbanner')
-	const { smAndUp } = useDisplay()
-	const isNeedSearchBtn = inject<IS_NEED_SEARCH_BTN_TYPE>(IS_NEED_SEARCH_BTN)
+
+	const { smAndUp, mdAndUp } = useDisplay()
+	const { isIntersecting } = inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)!
+	const route = useRoute()
+	const isShowSearchBar = computed(() => {
+		if (route.name === '/') return !mdAndUp.value && isIntersecting.value
+
+		const exception = ['/cart', '/login', '/register']
+		if (exception.includes(route.name)) return false
+
+		return !mdAndUp.value
+	})
 
 	const inputValue = ref('')
+	const isOpenDialog = ref(false)
+
 	const history = useSearchHistoryStore()
 	const showList = computed(() =>
 		history.outputList.filter(({ word }) => word !== inputValue.value)
 	)
 
 	const deleteSingleHistory = history.deleteSingleHistory
-	const triggerSubmit = useFormSubmit()
-	const submitHandler = useFormSubmitHandler(inputValue)
 
-	function listClick(value: string) {
-		inputValue.value = value
+	const form = useTemplateRef('form')
+	const submit = useTemplateRef('submit')
+	const triggerSubmit = useFormSubmit(form, submit)
+	const submitHandler = useFormSubmitHandler(inputValue, isOpenDialog)
+
+	const clickListItem = (word: string) => {
+		inputValue.value = word
 		triggerSubmit()
 	}
-
-	const vlist = useTemplateRef<typeof VList>('vlist')
-
-	function downToList() {
-		if (
-			vlist.value &&
-			vlist.value.$el instanceof Element &&
-			vlist.value.$el.firstElementChild instanceof HTMLElement
-		)
-			vlist.value.$el.firstElementChild.focus()
-	}
+	const downToList = useDownToList(useTemplateRef('vlist'))
 </script>
 
 <style scoped></style>

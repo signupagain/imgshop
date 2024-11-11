@@ -10,15 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-	import { TOGGLE_SEARCHBAR } from './key'
+	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from './key'
 	import useIsDarkTheme from './use/theme/useIsDarkTheme'
 
-	const route = useRoute()
-	const isNeedSearchBar = computed(() => !!route.meta?.isNeedSearchBar)
-
-	const isShowSearchBar = ref(false)
-	const toggleSearch = (isShow: boolean) => (isShowSearchBar.value = isShow)
-	provide(TOGGLE_SEARCHBAR, { isShowSearchBar, toggleSearch })
+	const isIntersecting = ref(false)
+	const toggle = (isShow: boolean) => (isIntersecting.value = isShow)
+	provide<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR, { isIntersecting, toggle })
 
 	const isDark = useIsDarkTheme()
 	const bgColor = computed(() => (isDark.value ? '#00000080' : '#ffffff80'))

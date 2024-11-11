@@ -3,7 +3,7 @@
 		class="text-h6 d-flex align-center"
 		href="/"
 		:title="t('home')"
-		@click.prevent
+		@click.prevent="router.push('/')"
 	>
 		<img
 			alt="the logo of ImgShop"
@@ -20,6 +20,7 @@
 
 	const { t } = useTranslation('topbanner')
 	const brandName = import.meta.env.VITE_BRAND_NAME
+	const router = useRouter()
 </script>
 
 <style scoped lang="scss" module>

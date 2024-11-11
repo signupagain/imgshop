@@ -1,7 +1,9 @@
 <template>
 	<v-form ref="form" @submit.prevent="submitHandler">
 		<v-autocomplete
-			v-model="inputValue"
+			v-model:menu="isOpenMenu"
+			v-model:search="inputValue"
+			clear-on-select
 			close-text="Search"
 			density="compact"
 			hide-details
@@ -15,9 +17,7 @@
 			name="search"
 			single-line
 			variant="solo-filled"
-			@keydown.enter="triggerSubmit"
-			@update:model-value="triggerSubmit"
-			@update:search="inputValue = $event"
+			@keydown.enter.prevent="triggerSubmit"
 		>
 			<template #append-inner>
 				<v-btn
@@ -30,7 +30,7 @@
 				></v-btn>
 			</template>
 			<template #item="{ props, item }">
-				<v-list-item v-bind="props">
+				<v-list-item v-bind="props" @click="clickListItem(item.title)">
 					<template #append>
 						<v-btn
 							icon="fas fa-circle-xmark"
@@ -47,12 +47,20 @@
 <script setup lang="ts">
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 	import useFormSubmit from '@/use/form/useFormSubmit'
-	import useFormSubmitHandler from '@/use/form/useFormSubmitHandler'
+	import useFormSubmitHandler from '@/use/form/useSearchFormSubmitHandler'
 	import { useTranslation } from 'i18next-vue'
 
 	const { t } = useTranslation('topbanner')
 	const inputValue = ref('')
+	const isOpenMenu = ref(false)
 	const history = useSearchHistoryStore()
-	const triggerSubmit = useFormSubmit()
-	const submitHandler = useFormSubmitHandler(inputValue)
+	const form = useTemplateRef('form')
+	const submit = useTemplateRef('submit')
+	const triggerSubmit = useFormSubmit(form, submit)
+	const submitHandler = useFormSubmitHandler(inputValue, isOpenMenu)
+
+	function clickListItem(word: string) {
+		inputValue.value = word
+		triggerSubmit()
+	}
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<article
-		ref="searchForm"
+		ref="searchWrap"
 		class="text-center position-relative"
 		:class="$style.x"
 	>
@@ -14,7 +14,7 @@
 		</div>
 		<theme-background></theme-background>
 	</article>
-	<search-gallery></search-gallery>
+	<search-gallery title-tag="h2"></search-gallery>
 </template>
 <script lang="ts" setup>
 	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
@@ -22,20 +22,12 @@
 	import useThresholdToggleSearchBar from '@/use/feedback/useThresholdToggleSearchBar'
 	import { useTranslation } from 'i18next-vue'
 
-	definePage({
-		meta: {
-			isNeedSearchBar: true,
-		},
-	})
-
 	const { t } = useTranslation()
-	const searchForm = useTemplateRef('searchForm')
-	const result = useThresholdToggleSearchBar(searchForm)
-	const toggleSearchBar =
-		inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)?.toggleSearch
-	watch(result, val => {
-		if (toggleSearchBar) toggleSearchBar(val)
-	})
+	const searchWrap = useTemplateRef('searchWrap')
+	const isIntersecting = useThresholdToggleSearchBar(searchWrap)
+	const { toggle } = inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)!
+
+	watch(isIntersecting, val => toggle(val))
 </script>
 <style lang="scss" module>
 	@use '@/styles/mixin';

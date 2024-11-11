@@ -6,7 +6,7 @@
 		}"
 	>
 		<template v-if="error">
-			<p :class="$style.error" v-text="error"></p>
+			<p class="elevation-10" :class="$style.error" v-text="error"></p>
 		</template>
 		<template v-else>
 			<img
@@ -14,8 +14,7 @@
 				ref="img"
 				v-decode-img
 				:alt
-				class="w-100 h-100"
-				:class="$style.img"
+				class="w-100 h-100 elevation-10"
 				:src
 			/>
 			<p :class="$style.author">

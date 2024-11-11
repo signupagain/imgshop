@@ -1,15 +1,17 @@
 import { VBtn, VForm } from 'vuetify/components'
 
-type SubmitBtn = HTMLInputElement | HTMLButtonElement | typeof VBtn
+type SubmitBtn =
+	| HTMLInputElement
+	| HTMLButtonElement
+	| InstanceType<typeof VBtn>
 
-export default (formRef: string = 'form', submitRef: string = 'submit') => {
-	const form = useTemplateRef<typeof VForm>(formRef)
-	const submit = useTemplateRef<SubmitBtn>(submitRef)
-
-	return () => {
-		if (form.value && submit.value)
-			submit.value instanceof HTMLElement ?
-				form.value.$el.requestSubmit(submit.value)
-			:	form.value.$el.requestSubmit(submit.value.$el)
+export default (
+		formRef: Ref<InstanceType<typeof VForm> | null>,
+		submitRef: Ref<SubmitBtn | null>
+	) =>
+	() => {
+		if (formRef.value && submitRef.value)
+			submitRef.value instanceof HTMLElement ?
+				formRef.value.$el.requestSubmit(submitRef.value)
+			:	formRef.value.$el.requestSubmit(submitRef.value.$el)
 	}
-}
