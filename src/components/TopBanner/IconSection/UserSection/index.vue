@@ -6,7 +6,7 @@
 			tag="a"
 			:text="t('login')"
 			:title="t('login')"
-			@click.prevent
+			@click.prevent="$router.push('/login')"
 		></v-btn>
 		<v-btn
 			v-if="mdAndUp"
@@ -15,7 +15,7 @@
 			:text="t('signup')"
 			:title="t('signup')"
 			variant="tonal"
-			@click.prevent
+			@click.prevent="$router.push('/register')"
 		></v-btn>
 	</template>
 	<template v-else>

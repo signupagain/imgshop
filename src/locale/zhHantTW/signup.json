@@ -1,0 +1,10 @@
+{
+	"title": "註冊",
+	"username": "帳戶",
+	"password": "密碼",
+	"checkPassword": "密碼確認",
+	"action": "註冊",
+	"error": {
+		"theSame": "與密碼不符"
+	}
+}

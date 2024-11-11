@@ -41,6 +41,23 @@ interface Resources {
     "nothingHere": "這裡什麼圖片都沒有",
     "noMoreImgData": "已經沒有圖片了"
   },
+  "login": {
+    "title": "登入",
+    "username": "帳戶",
+    "password": "密碼",
+    "action": "登入",
+    "toRegister": "進行註冊"
+  },
+  "signup": {
+    "title": "註冊",
+    "username": "帳戶",
+    "password": "密碼",
+    "checkPassword": "密碼確認",
+    "action": "註冊",
+    "error": {
+      "theSame": "與密碼不符"
+    }
+  },
   "topbanner": {
     "login": "登入",
     "signup": "註冊",
