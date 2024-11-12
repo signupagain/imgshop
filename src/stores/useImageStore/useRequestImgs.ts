@@ -3,7 +3,7 @@ import values from './values'
 import { AxiosError } from 'axios'
 import { searchCuratedRequest, searchRequest } from '@/api/pexels'
 import usePhotoHandler from './usePhotoHandler'
-import { NOMOREIMGDATA, NOTHINGHERE } from './constants'
+import { NOTHINGHERE } from './constants'
 
 export default (word: string = '') => {
 	activeTheme.value = word
