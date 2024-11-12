@@ -1,25 +1,23 @@
 import useImageStore from '@/stores/useImageStore'
-import { ShallowRef } from 'vue'
+import useScrollY from '../base/useScrollY'
 
-const imgStore = useImageStore()
+const DISTANCE = innerHeight * 4
+const { appendImgs } = useImageStore()
 
-export default (target: ShallowRef<HTMLDivElement | null>) => {
-	const option: IntersectionObserverInit = {
-		threshold: 0.01,
-	}
-
-	const cb: IntersectionObserverCallback = entries =>
-		entries.forEach(({ isIntersecting }) => {
-			if (isIntersecting) imgStore.appendImgs()
-		})
-
-	const observer = new IntersectionObserver(cb, option)
+export default () => {
+	const { y } = useScrollY()
 
 	onMounted(() => {
-		const el = unref(target)
+		const isAppendImg = computed(
+			() => document.body.scrollHeight - y.value < DISTANCE
+		)
 
-		if (el) observer.observe(el)
+		watch(
+			isAppendImg,
+			val => {
+				if (val) appendImgs()
+			},
+			{ immediate: true }
+		)
 	})
-
-	onUnmounted(() => observer.disconnect())
 }

@@ -39,7 +39,6 @@
 					width="13"
 				></v-progress-circular>
 			</div>
-			<div ref="target" :class="$style.request_box"></div>
 		</template>
 	</article>
 </template>
@@ -47,7 +46,6 @@
 <script setup lang="ts">
 	import usePhotoLoader from '@/use/feedback/usePhotoLoader'
 	import useSearchGalleryList from '@/use/layout/useSearchGalleryList'
-	import useRequestDetect from '@/use/request/useRequestDetect'
 	import logo from '@/assets/logo.svg'
 	import useGalleryTheme from '@/use/feedback/useGalleryTheme'
 	import utils from '@/styles/utils.module.scss'
@@ -55,6 +53,7 @@
 	import { storeToRefs } from 'pinia'
 	import { useTranslation } from 'i18next-vue'
 	import { NOMOREIMGDATA, NOTHINGHERE } from '@/stores/useImageStore/constants'
+	import useRequestDetect from '@/use/request/useRequestDetect'
 
 	defineProps<{ titleTag: string }>()
 
@@ -76,17 +75,10 @@
 		:	null
 	)
 
-	useRequestDetect(useTemplateRef('target'))
+	useRequestDetect()
 </script>
 
 <style lang="scss" module>
-	.request_box {
-		position: absolute;
-		inset: auto 0 0;
-		z-index: -1;
-		height: 200dvh;
-	}
-
 	.deco_box {
 		height: 100px;
 		display: grid;
