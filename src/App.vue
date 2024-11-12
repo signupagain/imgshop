@@ -9,15 +9,14 @@
 	></div>
 </template>
 
-<script lang="ts" setup>
-	import useIsDarkTheme from './use/theme/useIsDarkTheme'
-
-	const isDark = useIsDarkTheme()
-	const bgColor = computed(() => (isDark.value ? '#00000080' : '#ffffff80'))
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss">
 	.i_bottomx {
-		background: v-bind(bgColor);
+		background: #ffffffde;
+
+		.v-theme--dark + & {
+			background: #000000de;
+		}
 	}
 </style>
