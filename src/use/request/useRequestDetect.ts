@@ -16,11 +16,6 @@ export default (target: ShallowRef<HTMLDivElement | null>) => {
 	const observer = new IntersectionObserver(cb, option)
 
 	onMounted(() => {
-		if ('error' in imgStore.activeThemeProperty) {
-			observer.disconnect()
-			return
-		}
-
 		const el = unref(target)
 
 		if (el) observer.observe(el)

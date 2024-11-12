@@ -12,7 +12,7 @@ export default (threshold: number = 0.4) => {
 	const cb: IntersectionObserverCallback = (entries, observer) => {
 		const data = activeThemeProperty.value
 
-		if (!('error' in data)) {
+		if ('photos' in data) {
 			const photos = Array.from(data.photos)
 
 			entries.forEach(({ isIntersecting, target }) => {
