@@ -10,12 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from './key'
 	import useIsDarkTheme from './use/theme/useIsDarkTheme'
-
-	const isIntersecting = ref(false)
-	const toggle = (isShow: boolean) => (isIntersecting.value = isShow)
-	provide<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR, { isIntersecting, toggle })
 
 	const isDark = useIsDarkTheme()
 	const bgColor = computed(() => (isDark.value ? '#00000080' : '#ffffff80'))

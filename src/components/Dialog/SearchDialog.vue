@@ -75,17 +75,16 @@
 	import useFormSubmitHandler from '@/use/form/useSearchFormSubmitHandler'
 	import useSearchHistoryStore from '@/stores/useSearchHistoryStore'
 	import { VForm, VList } from 'vuetify/components'
-	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
 	import useDownToList from '@/use/feedback/useDownToList'
 	import { RouteRecordName } from 'vue-router'
+	import { isShow } from '@/use/feedback/useThresholdToggleSearchBar'
 
 	const { t } = useTranslation('topbanner')
 
 	const { smAndUp, mdAndUp } = useDisplay()
-	const { isIntersecting } = inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)!
 	const route = useRoute()
 	const isShowSearchBar = computed(() => {
-		if (route.name === '/') return !mdAndUp.value && isIntersecting.value
+		if (route.name === '/') return !mdAndUp.value && isShow.value
 
 		const exception: Array<RouteRecordName> = [
 			'/login',

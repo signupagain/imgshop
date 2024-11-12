@@ -1,11 +1,11 @@
 import { ShallowRef } from 'vue'
 
+export const isShow = ref(false)
+
 export default (
 	target: ShallowRef<Element | null>,
 	threshold: number = 0.3
 ) => {
-	const isShow = ref(false)
-
 	const option: IntersectionObserverInit = { threshold }
 	const cb: IntersectionObserverCallback = entries =>
 		entries.forEach(({ isIntersecting }) => (isShow.value = !isIntersecting))
@@ -17,6 +17,4 @@ export default (
 	})
 
 	onUnmounted(() => observer.disconnect())
-
-	return isShow
 }

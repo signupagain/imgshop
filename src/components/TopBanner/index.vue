@@ -15,15 +15,15 @@
 </template>
 
 <script setup lang="ts" name="TopBanner">
-	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
+	import { isShow } from '@/use/feedback/useThresholdToggleSearchBar'
 	import { RouteRecordName } from 'vue-router'
 	import { useDisplay } from 'vuetify'
 
 	const { mdAndUp } = useDisplay()
-	const { isIntersecting } = inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)!
 	const route = useRoute()
+
 	const isShowSearchBar = computed(() => {
-		if (route.name === '/') return mdAndUp.value && isIntersecting.value
+		if (route.name === '/') return mdAndUp.value && isShow.value
 
 		const exception: Array<RouteRecordName> = [
 			'/login',

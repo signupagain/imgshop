@@ -17,17 +17,14 @@
 	<search-gallery title-tag="h2"></search-gallery>
 </template>
 <script lang="ts" setup>
-	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
 	import utils from '@/styles/utils.module.scss'
 	import useThresholdToggleSearchBar from '@/use/feedback/useThresholdToggleSearchBar'
 	import { useTranslation } from 'i18next-vue'
 
 	const { t } = useTranslation()
 	const searchWrap = useTemplateRef('searchWrap')
-	const isIntersecting = useThresholdToggleSearchBar(searchWrap)
-	const { toggle } = inject<TOGGLE_SEARCHBAR_TYPE>(TOGGLE_SEARCHBAR)!
 
-	watch(isIntersecting, val => toggle(val))
+	useThresholdToggleSearchBar(searchWrap)
 </script>
 <style lang="scss" module>
 	@use '@/styles/mixin';
