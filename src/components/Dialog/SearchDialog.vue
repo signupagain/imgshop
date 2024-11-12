@@ -77,6 +77,7 @@
 	import { VForm, VList } from 'vuetify/components'
 	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
 	import useDownToList from '@/use/feedback/useDownToList'
+	import { RouteRecordName } from 'vue-router'
 
 	const { t } = useTranslation('topbanner')
 
@@ -86,7 +87,12 @@
 	const isShowSearchBar = computed(() => {
 		if (route.name === '/') return !mdAndUp.value && isIntersecting.value
 
-		const exception = ['/cart', '/login', '/register']
+		const exception: Array<RouteRecordName> = [
+			'/login',
+			'/photo/[id]',
+			'/register',
+			'/[userID]/cart',
+		]
 		if (exception.includes(route.name)) return false
 
 		return !mdAndUp.value

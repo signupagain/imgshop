@@ -16,6 +16,7 @@
 
 <script setup lang="ts" name="TopBanner">
 	import { TOGGLE_SEARCHBAR, TOGGLE_SEARCHBAR_TYPE } from '@/key'
+	import { RouteRecordName } from 'vue-router'
 	import { useDisplay } from 'vuetify'
 
 	const { mdAndUp } = useDisplay()
@@ -24,7 +25,12 @@
 	const isShowSearchBar = computed(() => {
 		if (route.name === '/') return mdAndUp.value && isIntersecting.value
 
-		const exception = ['/cart', '/login', '/register']
+		const exception: Array<RouteRecordName> = [
+			'/login',
+			'/photo/[id]',
+			'/register',
+			'/[userID]/cart',
+		]
 		if (exception.includes(route.name)) return false
 
 		return mdAndUp.value
