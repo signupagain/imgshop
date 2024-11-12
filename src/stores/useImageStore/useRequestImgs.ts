@@ -27,8 +27,6 @@ function useSearchCurated() {
 				mutiplier: 1,
 			}
 
-			if (!response.nextPage) response.error = NOMOREIMGDATA
-
 			imgsLib.value.set(activeTheme.value, response)
 		})
 		.catch(errorHandler)
@@ -45,7 +43,6 @@ function useSearchRequest() {
 			}
 
 			if (response.photos.size === 0) response.error = NOTHINGHERE
-			else if (!response.nextPage) response.error = NOMOREIMGDATA
 
 			imgsLib.value.set(activeTheme.value, response)
 		})

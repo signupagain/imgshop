@@ -11,7 +11,8 @@ export default (threshold: number = 0.4) => {
 	const option: IntersectionObserverInit = { threshold }
 	const cb: IntersectionObserverCallback = (entries, observer) => {
 		const data = activeThemeProperty.value
-		if (data && typeof data !== 'string') {
+
+		if (!('error' in data)) {
 			const photos = Array.from(data.photos)
 
 			entries.forEach(({ isIntersecting, target }) => {
