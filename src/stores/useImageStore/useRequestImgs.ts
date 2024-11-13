@@ -3,7 +3,7 @@ import values from './values'
 import { AxiosError } from 'axios'
 import { searchCuratedRequest, searchRequest } from '@/api/pexels'
 import usePhotoHandler from './usePhotoHandler'
-import { NOTHINGHERE } from './constants'
+import { NOMOREIMGDATA, NOTHINGHERE } from './constants'
 
 export default (word: string = '') => {
 	activeTheme.value = word
@@ -27,6 +27,8 @@ function useSearchCurated() {
 				mutiplier: 1,
 			}
 
+			if (!response.nextPage) response.error = NOMOREIMGDATA
+
 			imgsLib.value.set(activeTheme.value, response)
 		})
 		.catch(errorHandler)
@@ -43,6 +45,7 @@ function useSearchRequest() {
 			}
 
 			if (response.photos.size === 0) response.error = NOTHINGHERE
+			else if (!response.nextPage) response.error = NOMOREIMGDATA
 
 			imgsLib.value.set(activeTheme.value, response)
 		})

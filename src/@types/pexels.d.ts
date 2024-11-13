@@ -10,10 +10,9 @@ export interface PaginationParams extends Params {
 }
 
 interface PaginationObject {
-	url?: string
 	page: number
 	per_page: number
-	next_page: string
+	next_page?: string
 }
 
 export interface Photo {

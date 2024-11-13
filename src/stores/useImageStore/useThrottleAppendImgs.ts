@@ -27,6 +27,11 @@ const useSearchCurated = (property: ResultType, page: number) => {
 		.then(({ data }) => {
 			usePhotoHandler(data.photos).forEach(photo => property.photos.add(photo))
 			property.nextPage = data.page + 1
+
+			if (!data.next_page) {
+				property.nextPage = null
+				property.error = NOMOREIMGDATA
+			}
 		})
 		.catch(errorHandler)
 }
@@ -39,9 +44,16 @@ const useSearchRequest = (
 	searchRequest(activeTheme, page)
 		.then(({ data }) => {
 			usePhotoHandler(data.photos).forEach(photo => property.photos.add(photo))
+
 			property.nextPage = data.page + 1
+
 			if (property.total !== data.total_results)
 				property.total = data.total_results
+
+			if (!data.next_page) {
+				property.nextPage = null
+				property.error = NOMOREIMGDATA
+			}
 		})
 		.catch(errorHandler)
 }
