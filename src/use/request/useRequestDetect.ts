@@ -1,23 +1,12 @@
 import useImageStore from '@/stores/useImageStore'
-import useScrollY from '../base/useScrollY'
+import { useEventListener } from '../base/useEvent'
+import isAppendImgs from './useIsAppendImgs'
 
-const DISTANCE = innerHeight * 4
 const { appendImgs } = useImageStore()
 
-export default () => {
-	const { y } = useScrollY()
+export default () =>
+	useEventListener(window, 'scroll', () => {
+		if (!isAppendImgs()) return
 
-	onMounted(() => {
-		const isAppendImg = computed(
-			() => document.body.scrollHeight - y.value < DISTANCE
-		)
-
-		watch(
-			isAppendImg,
-			val => {
-				if (val) appendImgs()
-			},
-			{ immediate: true }
-		)
+		appendImgs()
 	})
-}
