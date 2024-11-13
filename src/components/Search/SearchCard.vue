@@ -5,67 +5,56 @@
 			'--ratio': ratio,
 		}"
 	>
-		<template v-if="error">
-			<p
-				class="elevation-10 text-center"
-				:class="$style.error"
-				v-text="error"
-			></p>
-		</template>
-		<template v-else>
-			<a
-				class="d-block w-100 h-100 elevation-10"
-				href="/"
-				style="cursor: zoom-in"
-				@click.prevent="toDetailPage"
-			>
-				<img
-					:id
-					ref="img"
-					v-decode-img
-					:alt
-					class="w-100 h-100"
-					crossorigin="anonymous"
-					loading="lazy"
-					:src
-				/>
+		<a
+			class="d-block w-100 h-100 elevation-10"
+			href="/"
+			style="cursor: zoom-in"
+			@click.prevent="toDetailPage"
+		>
+			<img
+				:id
+				ref="img"
+				:alt
+				class="w-100 h-100"
+				crossorigin="anonymous"
+				loading="lazy"
+				:src
+			/>
+		</a>
+		<p class="text-caption" :class="$style.author">
+			{{ t('by') }}
+			<a :href target="_blank">
+				{{ photographer }}
+				<v-icon
+					icon="fas fa-arrow-up-right-from-square"
+					:size="xs ? 8 : 12"
+				></v-icon>
 			</a>
-			<p class="text-caption" :class="$style.author">
-				{{ t('by') }}
-				<a :href target="_blank">
-					{{ photographer }}
-					<v-icon
-						icon="fas fa-arrow-up-right-from-square"
-						:size="xs ? 8 : 12"
-					></v-icon>
-				</a>
-			</p>
-			<div :class="$style.actions">
-				<v-btn
-					icon="fas fa-plus"
-					rounded
-					:size="smAndDown ? 'x-small' : 'default'"
-					:title="t('addToList')"
-					@click="appendShoppingList"
-				></v-btn>
-			</div>
-			<v-skeleton-loader
-				v-if="isLoading"
-				ref="loader"
-				:class="$style.loader"
-				:data-id="id"
-				elevation="10"
-				loading
-				type="image"
-			></v-skeleton-loader>
-		</template>
+		</p>
+		<div :class="$style.actions">
+			<v-btn
+				icon="fas fa-plus"
+				rounded
+				:size="smAndDown ? 'x-small' : 'default'"
+				:title="t('addToList')"
+				@click="appendShoppingList"
+			></v-btn>
+		</div>
+		<v-skeleton-loader
+			v-if="isLoading"
+			ref="loader"
+			:class="$style.loader"
+			:data-id="id"
+			elevation="10"
+			loading
+			type="image"
+		></v-skeleton-loader>
 	</div>
 </template>
 
 <script setup lang="ts">
 	import { ImgType } from '@/@types/pexels'
 	import { searchCardScrollRecord, toScreenshot } from '@/provides/bgScreenshot'
-	import useDecodeImg from '@/use/directives/useDecodeImg'
 	import { useTranslation } from 'i18next-vue'
 	import { VSkeletonLoader } from 'vuetify/components'
 	import { useDisplay } from 'vuetify'
@@ -90,7 +79,6 @@
 
 	const { t } = useTranslation()
 	const { xs, smAndDown } = useDisplay()
-	const { vDecodeImg, error } = useDecodeImg()
 
 	observeLoading(useTemplateRef('loader'))
 
