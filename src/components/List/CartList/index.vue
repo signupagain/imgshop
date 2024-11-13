@@ -83,7 +83,12 @@
 					<td v-text="item.title"></td>
 					<td v-text="item.photographer"></td>
 					<td class="text-center">
-						<img :alt="item.title" :class="$style.img" :src="item.src" />
+						<img
+							:alt="item.title"
+							:class="$style.img"
+							loading="lazy"
+							:src="item.src"
+						/>
 					</td>
 					<td class="text-end" v-text="item.price"></td>
 					<td v-if="isShoppingList">

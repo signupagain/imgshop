@@ -26,6 +26,7 @@
 					:alt
 					class="w-100 h-100"
 					crossorigin="anonymous"
+					loading="lazy"
 					:src
 				/>
 			</a>
