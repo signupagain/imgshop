@@ -9,6 +9,7 @@ import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes } from 'vue-router/auto-routes'
 import scrollBehavior from './scrollBehavior'
+import useChangeActiveName from './useChangeActiveName'
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,10 @@ router.onError((err, to) => {
 
 router.isReady().then(() => {
 	localStorage.removeItem('vuetify:dynamic-reload')
+})
+
+router.afterEach((to, from) => {
+	useChangeActiveName(to, from)
 })
 
 export default router
