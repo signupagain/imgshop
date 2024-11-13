@@ -182,6 +182,7 @@
 	.cart_table {
 		flex: 1;
 		overflow: auto;
+		user-select: text;
 
 		:global(.v-table__wrapper) {
 			flex: 1;
