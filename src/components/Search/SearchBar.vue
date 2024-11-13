@@ -3,6 +3,7 @@
 		<v-autocomplete
 			v-model:menu="isOpenMenu"
 			v-model:search="inputValue"
+			autofocus
 			clear-on-select
 			close-text="Search"
 			density="compact"

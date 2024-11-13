@@ -21,6 +21,7 @@
 						<v-text-field
 							ref="input"
 							v-model="inputValue"
+							autofocus
 							hide-details
 							variant="outlined"
 							@keydown.down.prevent="downToList"
