@@ -4,7 +4,7 @@ export default () => {
 	onMounted(() => {
 		document
 			.querySelectorAll(
-				`button:not(.${tabClass}), :any-link, input, [tabindex]:not([tabindex="-1"])`
+				`button:not(.${tabClass}), :any-link:not(.${tabClass}), input:not(.${tabClass}), [tabindex]:not([tabindex="-1"]):not(.${tabClass})`
 			)
 			.forEach(el => el.setAttribute('tabindex', '-1'))
 	})

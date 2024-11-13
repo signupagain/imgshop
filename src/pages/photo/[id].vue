@@ -17,7 +17,6 @@
 			<ZoomPhoto v-if="isZoom" :photo @toggle-zoom="isZoom = !isZoom" />
 			<v-img
 				v-else
-				v-focus
 				:alt="photo?.alt"
 				:aspect-ratio="photo?.ratio"
 				:class="$style.img"
@@ -39,7 +38,12 @@
 					<v-list-item :class="$style.item" tag="li">
 						<v-list-item-title>
 							{{ t('source') }}:
-							<a :href="photo?.url" rel="noopener noreferrer" target="_blank">
+							<a
+								:class="tabClass"
+								:href="photo?.url"
+								rel="noopener noreferrer"
+								target="_blank"
+							>
 								{{ t('to') }}
 								<v-icon :size="xs ? 8 : 12">
 									fas fa-arrow-up-right-from-square
@@ -52,7 +56,11 @@
 			<v-card-actions :class="$style.actions">
 				<v-speed-dial location="bottom" transition="fade-transition">
 					<template #activator="{ props: activatorProps }">
-						<v-btn v-bind="activatorProps" icon="fas fa-bars"></v-btn>
+						<v-btn
+							:class="tabClass"
+							v-bind="activatorProps"
+							icon="fas fa-bars"
+						></v-btn>
 					</template>
 
 					<v-btn
@@ -86,14 +94,12 @@
 	import { BGSCREENSHOT_KEY, bgScreenshotType } from '@/provides/bgScreenshot'
 	import useImageStore from '@/stores/useImageStore'
 	import useUserStore from '@/stores/useUserStore'
-	import useFocus from '@/use/directives/useFocus'
 	import useTabClass from '@/use/feedback/useTabClass'
 	import useLeaveId from '@/use/request/useLeave[id]'
 	import usePhotoWithId from '@/use/request/usePhotoWithId'
 	import { useTranslation } from 'i18next-vue'
 	import { useDisplay } from 'vuetify'
 
-	const { vFocus } = useFocus()
 	const imgStore = useImageStore()
 	const { mdAndDown, smAndDown } = useDisplay()
 	const bg = inject<bgScreenshotType>(BGSCREENSHOT_KEY)
