@@ -9,7 +9,7 @@ const name = computed({
 	set: value => (id.value = value),
 })
 
-const money = ref(Infinity)
+const money = ref(2000)
 const isUser = ref(false)
 
 const shoppingList = ref<UserItems>([])
