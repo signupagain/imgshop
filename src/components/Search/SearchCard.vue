@@ -33,6 +33,7 @@
 		</p>
 		<div :class="$style.actions">
 			<v-btn
+				v-if="isAddable"
 				icon="fas fa-plus"
 				rounded
 				:size="smAndDown ? 'x-small' : 'default'"
@@ -77,6 +78,10 @@
 		isLoading,
 	} = toRefs(item)
 
+	const userStore = useUserStore()
+
+	const isAddable = computed(() => !userStore.historyIdList.includes(id.value))
+
 	const { t } = useTranslation()
 	const { xs, smAndDown } = useDisplay()
 
@@ -91,8 +96,6 @@
 			router.push({ name: '/photo/[id]', params: { id: id.value } })
 		)
 	}
-
-	const userStore = useUserStore()
 
 	const appendShoppingList = () => {
 		if (userStore.historyIdList.includes(item.id)) return

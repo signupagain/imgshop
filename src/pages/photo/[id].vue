@@ -53,7 +53,7 @@
 					</v-list-item>
 				</v-list>
 			</v-card-text>
-			<v-card-actions :class="$style.actions">
+			<v-card-actions v-if="btnList.length !== 0" :class="$style.actions">
 				<v-speed-dial location="bottom" transition="fade-transition">
 					<template #activator="{ props: activatorProps }">
 						<v-btn
@@ -63,16 +63,17 @@
 						></v-btn>
 					</template>
 
-					<v-btn
-						v-for="{ icon, event } of btnList"
-						:key="icon"
-						:class="[$style.btn, tabClass]"
-						:icon
-						:size="smAndDown ? 'x-small' : 'default'"
-						:title="t('addToList')"
-						variant="elevated"
-						@click="event"
-					></v-btn>
+					<template v-for="{ icon, event, isExist } of btnList" :key="icon">
+						<v-btn
+							v-if="isExist"
+							:class="[$style.btn, tabClass]"
+							:icon
+							:size="smAndDown ? 'x-small' : 'default'"
+							:title="t('addToList')"
+							variant="elevated"
+							@click="event"
+						></v-btn>
+					</template>
 				</v-speed-dial>
 			</v-card-actions>
 		</v-card>
@@ -122,17 +123,26 @@
 			{
 				icon: 'fas fa-plus',
 				event: appendShoppingList,
+				isExist: isAddable.value,
 			},
 			{
 				icon: 'fas fa-circle-xmark',
 				event: leavePhoto,
+				isExist: mdAndDown.value,
 			},
 		]
 
-		return mdAndDown.value ? list : list.slice(0, -1)
+		return list.filter(({ isExist }) => isExist)
 	})
 
 	const userStore = useUserStore()
+	const isAddable = computed(() => {
+		let value = true
+
+		if (photo.value) value = !userStore.historyIdList.includes(photo.value?.id)
+
+		return value
+	})
 
 	const appendShoppingList = () => {
 		if (!photo.value || userStore.historyIdList.includes(photo.value.id)) return
