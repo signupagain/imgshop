@@ -1,5 +1,5 @@
-import darkBg from '@/assets/homeSearchBg-dark.webp'
-import lightBg from '@/assets/homeSearchBg-light.webp'
+import darkBg from '@/assets/homeSearchBg-dark.jpg'
+import lightBg from '@/assets/homeSearchBg-light.jpg'
 
 export const darkBgBind = {
 	alt: '北極光',
